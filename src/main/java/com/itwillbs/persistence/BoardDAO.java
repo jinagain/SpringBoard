@@ -13,4 +13,10 @@ public interface BoardDAO {
 	
 	// 글 목록 조회 - R
 	public List<BoardVO> readBoardListAll() throws Exception;
+	
+	// 글 조회수 1증가 - U
+	public void updateViewcnt(Integer bno) throws Exception;
+	
+	// 특정 글정보 조회 - R
+	public BoardVO readBoard(Integer bno) throws Exception;
 }

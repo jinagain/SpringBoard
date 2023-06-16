@@ -7,12 +7,47 @@
 <%-- 	${boardList } --%>
 	<h2> result : ${result }</h2>
 
+<!-- 모달창 -->
+		<div class="modal modal-info fade" id="modal-info"
+			style="display: none;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">ITWILL 페이지 정보</h4>
+					</div>
+					<div class="modal-body">
+						<p>One fine body…</p>
+					</div>
+					<div class="modal-footer">
+<!-- 						<button type="button" class="btn btn-outline pull-left" -->
+<!-- 							data-dismiss="modal">Close</button> -->
+<!-- 						<button type="button" class="btn btn-outline">확인</button> -->
+						<button type="button" class="btn btn-outline" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	<script type="text/javascript">
-	// DB - Service - Controller - View(jsp) -> JS -> AJAX
-	var data = "${result}";
-	if(data == "CREATEOK") {
-		alert("글쓰기 성공!");
-	}	
+	
+	$(document).ready(function(){
+		// DB - Service - Controller - View(jsp) -> JS -> AJAX
+		
+		var data = "${result}";
+		if(data == "CREATEOK") {
+// 			alert("글쓰기 성공!");
+// 			$(".modal-body").html("결과 : " + data);
+			callModal();
+		}
+
+		function callModal() {
+			$(".modal-body").html("글쓰기 성공!");
+			$("#modal-info").modal("show");
+		}
+	});
 	</script>
 
 	<div class="box">
@@ -33,7 +68,7 @@
 					<c:forEach var="vo" items="${boardList }">
 					<tr>
 						<td>${vo.bno }</td>
-						<td>${vo.title }</td>
+						<td><a href="/board/read?bno=${vo.bno }">${vo.title }</a></td>
 						<td>${vo.writer }</td>
 						<td>${vo.regdate }</td>
 						<td><span class="badge bg-olive">${vo.viewcnt }</span></td>
