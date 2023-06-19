@@ -18,4 +18,10 @@ public interface BoardService {
 	
 	// 특정 글정보 조회 - Read
 	public BoardVO getBoard(Integer bno) throws Exception;
+
+	// 특정 글 정보 수정 - Update
+	public void modifyBoard(BoardVO uvo) throws Exception;
+
+	// 특정 글 정보 삭제 - Delete
+	public void removeBoard(Integer bno) throws Exception;
 }

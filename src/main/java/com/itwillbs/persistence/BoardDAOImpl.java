@@ -49,6 +49,25 @@ public class BoardDAOImpl implements BoardDAO{
 		
 		return sqlSession.selectOne(NAMESPACE + ".getBoard", bno);
 	}
+	@Override
+	public void updateBoard(BoardVO uvo) throws Exception {
+		logger.debug(" updateBoard(BoardVO uvo) 호출! ");
+		
+		int result = sqlSession.update(NAMESPACE + ".updateBoard", uvo);
+		if(result == 1) {
+			logger.debug(uvo.getBno() + "번 글정보 수정 완료! ");
+		}
+	}
+	@Override
+	public void deleteBoard(Integer bno) throws Exception {
+		logger.debug("deleteBoard(int bno) 호출!");
+		
+		int result = sqlSession.delete(NAMESPACE + ".deleteBoard", bno);
+		if(result == 1) {
+			logger.debug(bno + "번 글정보 삭제 완료!");
+		}
+		
+	}
 	
 	
 	

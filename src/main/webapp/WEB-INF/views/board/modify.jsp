@@ -12,11 +12,11 @@
 		</div>
 			
 		<!-- 수정(get-post)/삭제(post) 정보 전달용 -->
-		<form role="form" id="fr">		
 			<div class="box-body">
+				<form role="form" id="fr">		
 				<div class="form-group">
 					<label for="exampleInputEmail1">번  호</label> 
-					<input type="text" name="title" class="form-control" id="exampleInputEmail1" readonly value="${vo.bno }">
+					<input type="text" name="bno" class="form-control" id="exampleInputEmail1" readonly value="${vo.bno }">
 				</div>		
 				<div class="form-group">
 					<label for="exampleInputEmail1">제  목</label> 
@@ -31,12 +31,23 @@
 					<textarea name="content" class="form-control" rows="3">${vo.content }</textarea>
 				</div>
 				
+				</form>
 				<div class="box-footer">
 					<button type="submit" class="btn btn-danger">수정하기</button>
 					<button type="reset" class="btn btn-warning">취소하기</button>
 				</div>
 			</div>
-		</form>
 	</div>
-		
+	
+	<script>
+		$(document).ready(function() {
+			var formObj = $("#fr");
+			
+			$(".btn-danger").click(function() {
+				// 수정하기 동작 - modify주소, post방식
+				formObj.attr("method", "post");
+				formObj.submit();
+			});
+		})
+	</script>	
 <%@include file="../include/footer.jsp" %>

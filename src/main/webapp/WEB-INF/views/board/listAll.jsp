@@ -40,11 +40,17 @@
 		if(data == "CREATEOK") {
 // 			alert("글쓰기 성공!");
 // 			$(".modal-body").html("결과 : " + data);
-			callModal();
+			callModal("글쓰기 성공!");
+		}
+		if(data == "MODOK") {
+			callModal("글수정 성공!");
+		}
+		if(data == "DELOK") {
+			callModal("글삭제 성공!");
 		}
 
-		function callModal() {
-			$(".modal-body").html("글쓰기 성공!");
+		function callModal(txt) {
+			$(".modal-body").html(txt);
 			$("#modal-info").modal("show");
 		}
 	});
