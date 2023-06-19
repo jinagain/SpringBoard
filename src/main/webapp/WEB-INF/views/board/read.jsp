@@ -55,6 +55,12 @@
 				frObj.submit();
 			});
 			
+			$(".btn-warning").click(function() {
+				frObj.attr("action", "/board/remove");
+				frObj.attr("method", "post");
+				frObj.submit();
+			});
+			
 			$(".btn-success").click(function() {
 				location.href='/board/listAll';
 			});

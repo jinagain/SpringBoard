@@ -1,0 +1,381 @@
+https://github.com/spring-attic/toolsuite-distribution/wiki/Spring-Tool-Suite-3
+
+* Spring Tool Suite 3.9.12 / full distribution on Eclipse 4.14 버전 설치
+
+https://download.springsource.com/release/STS/3.9.12.RELEASE/dist/e4.14/spring-tool-suite-3.9.12.RELEASE-e4.14.0-win32-x86_64.zip
+
+
+------------------------------------------------------------------------------------
+
+ 프레임워크(Framework)
+ : 어떤 대상을 구성하는 구조, 틀,뼈대
+  => 소프트웨어적 : 기능(클래스,인터페이스)을 미리 만들어놓은 반제품
+          => 밀키트(어느정도 완성된 상태의 제품)
+
+ 스프링 프레임워크(Spring Framework)
+ : 자바 웹 애플리케이션을 개발하기위한 오픈소스 프레임워크
+  => 경량 프레임워크 / 경량 컨테이너
+
+ * EJB(Enterprise Java Beans)
+ * 컨테이너 : tomcat(서블릿 컨테이너), 서블릿 생성,초기화,서비스 실행,소멸 
+
+
+  스프링 < - > 스프링부트
+
+ 스프링 (Spring Legacy Project) 1.x - 2.x / 4~5버전 내용 학습
+  - 아직까지도 실무에 가장 많이 사용(전자정부 프레임워크)
+  - 다양한 자료 많음(구글링 쉽다. GPT/bard가 잘찾아줌)
+  - 기존의 회사프로젝트 이해하기 쉬움
+  - 모든 버전의 스프링을 사용가능(라이브러리 포함)
+ 
+  _ 초반에 어려움(설정, 개발환경 구성)
+  _ WAS를 사용(tomcat) 결과를 확인하기 위한 리소스가 많이 필요함
+
+ 스프링부트 (Spring starter Project) 2~3버전
+  - 별도의 설정이 필요없음(간편한 설정)
+  - 별도의 WAS가 필요없음(내장서버)
+  - 처리속도 빠른편 (간단한 테스트 사용 용이)
+  - 다양한 버전의 스프링/라이브러리 사용 X (자동으로 권장버전을 찾아서 사용)
+
+  _  기존의 설정과 다른방식의 개발 (적응필요)
+  _  JSP(view) 설정이 별도 작성필요 => HTML(view) - 스프링 타임리프(thymeleaf)
+  
+
+* MAVEN : 빌드 도구  - 프로그램에 필요한 라이브러리 사용
+  https://mvnrepository.com/
+  -  maven update 사용
+  -  .m2 폴더 리셋
+
+* 스프링의 특징
+  - EJB보다 가볍고 학습하기 쉬운 경량 프레임워크이다.
+  - POJO(Plain Old Java Object)기반의 구성  
+  - 제어의 역행( IoC, Inversion of Control ) 애플리케이션 간의 느슨한 결합을 제어
+  - 의존성 주입( DI, Dependency Injection )을 지원
+  - 관점지향프로그래밍( AOP, Aspect-Oriented Programming) 자원관리 수행
+  - 영속성(persistence)관련 다양한 서비스(프레임워크)를 제공
+
+
+ * 제어의 역행( IoC, Inversion of Control ) 
+ => 특정 동작을 개발자가 처리하는 것이 아니라 외부에서 처리 되도록 하는것
+  => 서블릿/객체(빈)을 개발자가 직접 코드로 생성X, 프레임워크가 처리
+
+ * 의존성 주입( DI, Dependency Injection )
+ => 제어의 역행을 바탕으로 필요한 정보(객체)를 외부에서 결정해서 연결시키는것
+  => 개발자가 직접 생성한 코드가 아닌, 프레임워크가 생성해놓은 객체를 사용하는것
+
+
+ * 관점지향프로그래밍( AOP, Aspect-Oriented Programming)
+  =>  중요(핵심)기능과 보조기능을 분리 구현함으로 프로젝트의 모듈성 증가
+        ( 개발로직의 집중 ) 
+
+ 
+ * 스프링 주요 기능
+  - CORE : 다른 기능, 설정들을 분리하기 위한 IoC를 제공
+  - CONTEXT : 스프링의 기본기능, 애플리케이션의 각 기능을 수행하는 빈(객체)를 접근 가능
+  - DAO : JDBC 기능을 조금더 편하게 사용가능한 기능제공
+  - ORM : 마이바티스,하이버네이트등  디비관련(영속성) 연동을 기능을 제공
+  - AOP : 관점 지향 프로그래밍 지원
+  - WEB : 웹 개발에 필요한 전반적인 설정을 지원(필터) 
+  - WEBMVC :  스프링 MVC 구현 기능 제공 
+
+-----------------------------------------------------------------------------------------------------------
+
+ - Presentation Layer : UI를 담당하는 구성요소 (웹/모바일)
+   ( View, Controller )
+ - Business Logic Layer : 서비스계층 - 고객 요구사항을 구현하는 계층
+   ( Action )
+ - Data Access Layer : 영속계층(persistence Layer), 데이터 처리 계층
+   ( DAO )
+ - Data Base 
+
+ 요청 - Controller		- Service - DAO - MyBatis - DB
+	|
+	View
+	(jsp, html, css, js, ...) 
+https://mybatis.org/mybatis-3/ko/index.html
+마이바티스는 개발자가 지정한 SQL, 저장프로시저 그리고 몇가지 고급 매핑을 지원하는 퍼시스턴스 프레임워크이다. 마이바티스는 JDBC로 처리하는 상당부분의 코드와 파라미터 설정및 결과 매핑을 대신해준다. 마이바티스는 데이터베이스 레코드에 원시타입과 Map 인터페이스 그리고 자바 POJO 를 설정해서 매핑하기 위해 XML과 애노테이션을 사용할 수 있다.
+
+ * MyBatis : SQL Mapper 라이브러리(프레임워크)
+		- 반복적인 코드 실행 줄여줌 (try-catch-finally, pstmt, rs)
+		- SQL 구문을 분리 (XML / 어노테이션)
+		- Spring 연동 자동화
+		- 동적 SQL 구문 사용가능
+
+	* 스프링 + MyBatis
+	
+	1) XML코드를 사용한 SQL작성, DAO에서 XML연결
+		장점 : SQL구문 분리 => 유지보수가 좋음
+		단점 : 작성해야 하는 코드 분량 증가, 복작섭 증가
+	
+	2) 어노테이션 + 인터페이스 SQL작성
+		장점 : 별도의 DAO객체없이 사용가능 => 생산성 증가
+		단점 : SQL수정마다 컴파일 발생
+	
+	3) XML코드 / 어노테이션 SQL작성
+		장점 : 간단한 SQL - 어노테이션 / 복잡한 SQL - XML 사용
+		단점 : 개발자의 역량 차이가 큼 ( SQL 유지보수 부적합 )
+		
+	* XML 코드를 사용한 SQL 작성
+	 - DB 테이블 생성 (+개발준비)
+	 - 도메인 객체 설계 & 클래스 생성
+	 - DAO 인터페이스 생성
+	 - 인터페이스 안에 필요한 기능을 정의
+	 - XML 파일(Mapper) 생성
+	 - XML 파일 구성(설정) & SQL 구문 작성
+	 	- XML파일의 DTD 설정
+	 	- XML파일의 위치(저장경로)를 지정(namespace)
+	 	- SQL 작성
+	 - MyBatis와 스프링에서 XML Mapper를 인식설정
+	 - DAO객체를 구현 (기능 구현)
+	 - 테스트 파일 실행 (=> 서비스 / 컨트롤러 호출)
+		
+	MVC : 		Controller -> Action -> DAO -> DB
+	SPRINGMVC : Test -> DAOImpl -> ( Mybatis ) -> mapper -> DB 	
+		
+		 
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.25</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+ mybatis-spring : 스프링 - mybatis를 연결
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>1.3.0</version>
+		</dependency>
+		
+ spring-jdbc : 스프링에서 JDBC 사용하기 위한 라이브러리
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>6.0.9</version>
+		</dependency>
+		
+ spring-test : mybatis와 스프링이 정상연결여부 확인
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>6.0.9</version>
+		    <scope>test</scope>
+		</dependency>
+
+
+
+	* log4j : 스프링 개발 시에 필요한 정보를 로그로 출력
+				기존에 사용했던 출력문은 서비스 배포 시 에는 필요없기 때문에 제거해야 함
+				-> 직접 출력코드 삭제 X (로그레벨에 따른 실행을 결정)
+				=> 프로그램 내부에 로그레벨을 설정 (지정한 레벨보다 낮은 레벨의 메세지만 출력)
+	- 로그레벨
+	FATAL	(6) : 시스템 차원의 심각한 상태의 레벨
+	ERROR	(5) : 실행 중에 문제 발생한 상태의 레벨
+	WARN	(4) : 시스템 오류의 원인을 표시하는 상태의 레벨
+	INFO	(3) : 애플리케이션의 운영정보(로그인기록, 상태변경기록, ...) 출력하는 레벨
+	DEBUG	(2) : 개발 시에 필요한 디버깅 용도 레벨
+	TRACE 	(1) : DEBUG 레벨 보다 상세한 정보를 출력 레벨
+
+	
+	개발자 작성코드
+	---------------
+	Spring MVC
+	---------------
+	Servlet
+	
+	* 스프링 MVC 구조 (p120)
+	request -> FrontController - Controller - Service - DAO - Mybatis (mapper) - DB
+					|
+					View
+
+	* 컨트롤러 (Controller)
+	0) doGet/doPost => doProcess
+	1) 가상주소 계산
+	2) 가상주소 비교
+	3) 페이지 이동
+	
+	* 스프링 MVC - 기본기능
+	- URI를 분석해서 필요한 적정 컨트롤러 연결
+	  (*.me, *.bo, ... -> 컨트롤러 분리)
+	- 컨트롤러 실행 시 동작에 적절한 메서드 실행
+	- 컨트롤러 생성된 데이터를 뷰페이지로 전달
+	- 동작에 해당하는 적절한 뷰페이지 연결
+
+	- (컨트롤러) : 파라메터 수집기능(자동) 제공
+					(설계해놓은 DTO/VO 객체 저장 효율)
+					
+					어노테이션 제공
+
+	* 스프링 MVC - 구현기능(개발자)
+	- 특정 URI에 동작하는 컨트롤러 설계
+	- 서비스 객체 생성 (Action페이지)
+	- DAO 객체 생성
+	- 컨트롤러 안에 필요한 동작을 메서드로 구현
+	- 뷰페이지에 전달받은 정보를 출력
+
+	* 비지니스 계층 - Action페이지 부분
+	=> 컨트롤러와 DAO를 연결하는 부품(접착제)
+	=> 코드량이 증가
+	
+	=> 컨트롤러가 영속계층에 종속적인 상황을 막기 위해서
+	=> 해당 요구사항마다 각각 다른 형태로 구현하기 위해서
+
+------------------------------------------------------------
+* 데이터베이스 관련
+	- 관련 스키마(DB) 생성, 계정 생성
+	- 테이블 설계 (ERD)
+	- 테스트 더미데이터 준비
+	
+* 스프링MVC관련
+	- 개발 구조(패키지 설정)
+	- 개발 규칙 설정
+	- 개발 역할 분담
+	- 테스트 계획 수립
+	
+* 화면관련
+	- 뷰페이지 결정 (JSP, HTML-JS)
+	- 경로설정(절대경로, 상대경로)
+
+-----------------------------------------------------------------------------------------
+* 의존객체 자동주입 (Automatic Dependency Injection)
+	=>스프링 설정파일이나, 태그 형태로 객체를 명시X,
+	  스프링컨테이너가 자동으로 해당 객체를 찾아서 사용
+1) @Inject
+	- JAVA에서 지원하는 어노테이션 ( 특정 프레임워크에 종속x )
+	- 객체를 찾는 순서
+	  [ 타입  -> @Qualifier -> 이름 -> 실패(없음)  ]
+	- Maven(빌드도구)에  라이브러리 의존성 추가
+	- 멤버변수,setter(),생성자,일반메서드 에서 사용가능
+	
+2) @Autowired
+	- Spring에서 지원하는 어노테이션
+	- 객체 찾는 순서
+	  [ 타입 -> 이름 -> @Qualifier -> 실패(없음) ]
+	- 멤버변수, setter(), 생성자 , 일반 메서드에서 사용가능
+
+
+3) @Resource
+	- JAVA에서 지원하는 어노테이션
+	- 객체를 찾는 순서
+	  [이름 -> 타입 -> @Qualifier -> 실패(없음) ]
+	- 멤버변수, setter() 사용가능
+
+* @Qualifier
+	=> 타입이 동일한 객체(bean) 여러 개 있을 때 (Exception발생) 대상을 구분하는 역할 (별명을 만든다)
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<qualifier value="ds1">
+	</bean>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<qualifier value="ds2">
+	</bean>
+	
+	@Autowired @Qualifier("ds2")
+	private Datasource ds;
+
+----------------------------------------------------------------------------------
+CREATE TABLE `springdb`.`tbl_board` (
+  `bno` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(100) NOT NULL,
+  `content` TEXT NULL,
+  `writer` VARCHAR(45) NOT NULL,
+  `viewcnt` INT NOT NULL DEFAULT 0,
+  `regdate` TIMESTAMP NOT NULL DEFAULT now(),
+  PRIMARY KEY (`bno`));
+
+
+
+
+
+
+계층형 패키지구조
+	[com.itwillbs.Controller.~~~]
+		Controller
+		MemberController
+		BoardController
+		Service
+		Persistence
+		Domain
+
+도메인형 패키지구조
+	[com.itwillbs.member.Controller.~~~~]
+		member
+			-controller
+				MemberController
+			-service
+			-persistence
+			-domain
+		board
+			-controller
+			-service
+			-persistence
+			-domain
+
+------------------------------------------------------------------------------------------------------------------------
+
+	<select id="listAll" resultType="BoardVO" resultMap="board">
+		<![CDATA[    
+			select * from tbl_board 
+			where bno > 0
+		]]>
+	</select>
+
+CDATA  (Unparsed Character DATA) : 파싱하지 않은 데이터 => 문자그대로 사용
+PCDATA (Parsed Character DATA) : 파싱된 문자데이터
+
+	* XML 파일 : 태그형태로 다양한 정보를 저장가능
+			=> 가능하면 부등호를 사용한 비교 X ( 잘못된 파싱 발생 )
+                       
+	> [&gt;]	< [&lt;]	>= [&gt;=]	<= [&lt;=]
+
+======================================================================
+*관점지향프로그래밍(AOP, Aspect-Oriented Programming)
+	=> 메서드 안에 주기능/보조기능 이 있다면 분리해서 선택적으로 수행가능하도록 구분하는 방법
+	=> 개발자가 비지니스로직(주기능)에 집중하도록 하는 것, 보조기능은 SPRING이 대신 수행
+	
+	주기능 - 글 정보 삭제
+	보조기능 - 로거 메시지 출력 (로깅, 보안, 트랜젝션, 예외처리, ...(횡단관심사))
+	ex) // 글 정보 삭제
+		@RequestMapping(value = "/remove", method = RequestMethod.POST)
+		public String removeBoard(RedirectAttributes rttr, @RequestParam("bno") int bno) throws Exception {
+			logger.debug("removeBoard() 호출");
+			// 전달정보 저장(bno)
+			logger.debug("bno : " + bno);
+			
+			// 서비스 - 글정보 삭제 동작 호출
+			service.removeBoard(bno);
+			// 상태정보 전달
+			rttr.addFlashAttribute("result", "DELOK");
+					
+			// 페이지 이동(리스트)
+			return "redirect:/board/listAll";
+		}
+
+	* AOP 관련용어
+		- aspect : 구현하고자 하는 보조기능
+		- advice : aspect의 실제 구현체
+		- joinpoint : advice를 적용하는 지점(메서드 결합점 - 스프링)
+		- pointcut : advice가 적용되는 대상을 지정
+		- target : advice가 적용되는 클래스
+		- weaving : advice를 주기능에 적용하는 것
+
+---------------------------------------------------------------------------
+
+- AOP 기능 구현
+1) target 클래스 지정
+2) Advice 클래스 지정
+3) 설정파일에서 pointcut 설정
+	(Advice + pointcut => Advicer)
+4) 외부 객체를 주입해서 사용
+
+
