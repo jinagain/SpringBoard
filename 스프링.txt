@@ -378,4 +378,45 @@ PCDATA (Parsed Character DATA) : 파싱된 문자데이터
 	(Advice + pointcut => Advicer)
 4) 외부 객체를 주입해서 사용
 
+----------------------------------------------------------------------------
+* 페이징처리
+	- 반드시 GET방식 사용
+	- 본문에서 다시 목록으로 이동하는 기능이 필요함
+	- 5페이지 글정보를 확인했다면, 다시 리스트 이동 후 5페이지로 이동해야 함.
+	- 페이지양에 따라서 [다음], [이전] 버튼의 활성화
+	
+	페이징처리 하단부 (페이지 플럭)
+		- 시작페이지 번호 (startPage)
+			startPage = (endPage - pageBlock) + 1
+		- 끝페이지 번호 (endPage)
+			endPage = (int)(Math.ceil(page/(double)pageBlock)*pageBlock)
+			* 마지막 페이지 번호, endPage 비교
 
+				마지막 페이지번호 = Math.ceil(totalCount/pageSize)
+				if(마지막 페이지번호 < endPage) {
+					endPage = 마지막 페이지번호
+				}
+		
+		- 전체 글의 개수 (totalCount) => DB count() 함수
+		- 이전 링크 (prev)
+			startPage == 1? false : true
+		- 다음 링크 (next)
+			
+		// 총 : 122개, 페이지당 10개씩 출력
+		=> 페이지수 ? 13
+		// 페이지 블럭 한번에 10개씩 출력 1...10 11...20
+		
+		page = 3
+		시작페이지 번호 : 1
+		끝페이지 번호 : 10
+		이전 : X / 다음 : O
+		
+		page = 10
+		시작 페이지 번호 : 1
+		끝 페이지 번호 : 10
+		이전 : X / 다음 : O
+		
+		page = 12
+		시작페이지번호 : 11
+		끝페이지 번호 : 13
+		이전 : O / 다음 : X

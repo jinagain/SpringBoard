@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageMaker;
+import com.itwillbs.domain.PageVO;
 import com.itwillbs.service.BoardService;
 
 @Controller
@@ -55,13 +57,21 @@ public class BoardController {
 		return "redirect:/board/listAll";
 	}
 	
+	// http://localhost:8088/board/listAll
+	// http://localhost:8088/board/listAll?page=2
+	// http://localhost:8088/board/listAll?page=3&pageSize=20
 	// 게시판 글 목록
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public String listAllGET(HttpSession session, Model model, @ModelAttribute("result") String result) throws Exception {
+	public String listAllGET(PageVO vo, HttpSession session, Model model, @ModelAttribute("result") String result) throws Exception {
 		logger.debug(" listAllGET() 호출 ");
 		logger.debug(" result : " + result);
-		// DB에 저장된 글 정보를 가져오기
-		List<BoardVO> boardList = service.getListAll();
+		
+//		PageVO vo = new PageVO(); // page = 1, pageSize = 10
+		
+		// Service - DB에 저장된 글 정보를 가져오기
+//		List<BoardVO> boardList = service.getListAll();
+		// Service - 페이징처리된 리스트 정보 가져오기
+		List<BoardVO> boardList = service.getListPage(vo);
 		logger.debug("boardList : " + boardList);		
 		
 		// 조회수 체크 값
@@ -146,6 +156,36 @@ public class BoardController {
 				
 		// 페이지 이동(리스트)
 		return "redirect:/board/listAll";
+	}
+	
+	// http://localhost:8088/board/listAll?page=3&pageSize=20
+	// 게시판 글 목록
+	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
+	public String listPageGET(PageVO vo, HttpSession session, Model model, @ModelAttribute("result") String result) throws Exception {
+		logger.debug(" listPageGET() 호출 ");
+		logger.debug(" result : " + result);
+		
+//		PageVO vo = new PageVO(); // page = 1, pageSize = 10
+		
+		// Service - DB에 저장된 글 정보를 가져오기
+//		List<BoardVO> boardList = service.getListAll();
+		// Service - 페이징처리된 리스트 정보 가져오기
+		List<BoardVO> boardList = service.getListPage(vo);
+		logger.debug("boardList : " + boardList);		
+		
+		// 페이징처리 (하단부) 정보저장객체
+		PageMaker pm = new PageMaker();
+		pm.setPageVO(vo);
+		pm.setTotalCount(2816);
+		
+		// 조회수 체크 값
+		session.setAttribute("checkViewCnt", true);
+		
+		// 연결된 뷰페이지로 전달 (뷰-출력)
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pm", pm);
+		logger.debug("pm"+pm);
+		return "/board/listAll";
 	}
 	
 }

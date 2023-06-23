@@ -3,6 +3,7 @@ package com.itwillbs.service;
 import java.util.List;
 
 import com.itwillbs.domain.BoardVO;
+import com.itwillbs.domain.PageVO;
 
 public interface BoardService {
 	// Board에서 수행하는 동작 선언
@@ -24,4 +25,7 @@ public interface BoardService {
 
 	// 특정 글 정보 삭제 - Delete
 	public void removeBoard(Integer bno) throws Exception;
+	
+	// 게시판 리스트 조회(페이징처리)
+	public List<BoardVO> getListPage(PageVO vo) throws Exception;
 }
