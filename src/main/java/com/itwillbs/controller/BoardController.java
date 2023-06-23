@@ -54,12 +54,12 @@ public class BoardController {
 		
 		// 리스트페이지로 이동
 //		return "redirect:/board/listAll?test=12345"; // Model객체(@ModelAttribute)
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
-	// http://localhost:8088/board/listAll
-	// http://localhost:8088/board/listAll?page=2
-	// http://localhost:8088/board/listAll?page=3&pageSize=20
+	// http://localhost:8088/board/listPage
+	// http://localhost:8088/board/listPage?page=2
+	// http://localhost:8088/board/listPage?page=3&pageSize=20
 	// 게시판 글 목록
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 	public String listAllGET(PageVO vo, HttpSession session, Model model, @ModelAttribute("result") String result) throws Exception {
@@ -79,7 +79,7 @@ public class BoardController {
 		
 		// 연결된 뷰페이지로 전달 (뷰-출력)
 		model.addAttribute("boardList", boardList);
-		return "/board/listAll";
+		return "/board/listPage";
 	}
 	
 	// http://localhost:8088/board/read?bno=6
@@ -139,7 +139,7 @@ public class BoardController {
 		// 상태정보 전달
 		rttr.addFlashAttribute("result", "MODOK");
 //		return "redirect:/board/read?bno=" + vo.getBno();
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	// 글정보 삭제
@@ -155,10 +155,10 @@ public class BoardController {
 		rttr.addFlashAttribute("result", "DELOK");
 				
 		// 페이지 이동(리스트)
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
-	// http://localhost:8088/board/listAll?page=3&pageSize=20
+	// http://localhost:8088/board/listPage?page=3&pageSize=20
 	// 게시판 글 목록
 	@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 	public String listPageGET(PageVO vo, HttpSession session, Model model, @ModelAttribute("result") String result) throws Exception {
@@ -176,7 +176,8 @@ public class BoardController {
 		// 페이징처리 (하단부) 정보저장객체
 		PageMaker pm = new PageMaker();
 		pm.setPageVO(vo);
-		pm.setTotalCount(2816);
+//		pm.setTotalCount(2816);
+		pm.setTotalCount(service.getTotalCount());
 		
 		// 조회수 체크 값
 		session.setAttribute("checkViewCnt", true);
@@ -184,7 +185,7 @@ public class BoardController {
 		// 연결된 뷰페이지로 전달 (뷰-출력)
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pm", pm);
-		logger.debug("pm"+pm);
+
 		return "/board/listAll";
 	}
 	

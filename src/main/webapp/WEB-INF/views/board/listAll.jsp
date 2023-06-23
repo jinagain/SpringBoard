@@ -83,5 +83,18 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="box-footer clearfix">
+			<ul class="pagination pagination-sm no-margin pull-right">
+				<c:if test="${pm.prev }">
+					<li><a href="/board/listPage?page=${pm.startPage-1 }">«</a></li>
+				</c:if>
+				<c:forEach begin="${pm.startPage }" end="${pm.endPage }" var="idx">
+					<li <c:out value="${pm.pageVO.page == idx? 'class=active':'' }"/>class="active"><a href="/board/listPage?page=${idx }">${idx }</a></li>
+				</c:forEach>
+				<c:if test="${pm.next && pm.endPage > 0 }">
+					<li><a href="/board/listPage?page=${pm.endPage+1 }">»</a></li>
+				</c:if>
+			</ul>
+		</div>
 	</div>
 <%@ include file="../include/footer.jsp" %>
