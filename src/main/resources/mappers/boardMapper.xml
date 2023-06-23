@@ -19,7 +19,10 @@
   	
   	<!-- 글 목록 조회 -->
   	<select id="listAll" resultType="BoardVO" resultMap="board">
-  		select * from tbl_board
+	  	<![CDATA[
+	  		select * from tbl_board 
+	  		where bno > 0 
+	  	]]>
   	</select>
   	
   	<!-- 글 조회수 1증가 -->
@@ -45,4 +48,15 @@
   		delete from tbl_board 
   		where bno = #{bno}
   	</delete>
+  	
+  	<!-- 글 목록 조회(페이징) -->
+  	<select id="listPage" resultType="BoardVO" resultMap="board">
+	  	<![CDATA[
+	  		select * from tbl_board 
+	  		where bno > 0 
+	  		order by bno desc, regdate desc 
+	  		limit #{startPage}, #{pageSize}
+	  	]]>
+  	</select>
+  	
   </mapper>
