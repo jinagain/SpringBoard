@@ -21,6 +21,7 @@ public class PageMaker {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 		// DB에서 계산된 정보를 가져오기
+		calcMyPage();
 		
 	}
 	
@@ -28,13 +29,12 @@ public class PageMaker {
 		// 페이징처리 하단 필요한 정보계산
 		endPage = (int)(Math.ceil(pageVO.getPage()/(double)pageBlock) * pageBlock);
 		
-		int tmpEndpage = (int)Math.ceil(totalCount / (double)pageVO.getPageSize());
+		startPage = (endPage - pageBlock) + 1;
 		
+		int tmpEndpage = (int)Math.ceil(totalCount / (double)pageVO.getPageSize());
 		if(endPage > tmpEndpage) {
 			endPage = tmpEndpage;
 		}
-		
-		startPage = (endPage - pageBlock) + 1;
 		
 //		prev = (startPage == 1)? false : true;
 		prev = startPage != 1;

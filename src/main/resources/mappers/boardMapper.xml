@@ -59,4 +59,8 @@
 	  	]]>
   	</select>
   	
+  	<select id="totalCnt" resultType="int">
+  		select count(*) from tbl_board
+  	</select>
+  	
   </mapper>

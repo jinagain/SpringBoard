@@ -28,4 +28,7 @@ public interface BoardService {
 	
 	// 게시판 리스트 조회(페이징처리)
 	public List<BoardVO> getListPage(PageVO vo) throws Exception;
+	
+	// 게시판 총 글 개수 계산
+	public int getTotalCount() throws Exception;
 }
